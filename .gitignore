@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+**/dist/
+build/
+**/build/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+**/.env
+**/.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+
+# Database
+*.db
+*.sqlite
+
+# Workflows (managed separately)
+workflows/*/logs/
+workflows/*/artifacts/
+
+# Git subdirectories (keep AIDeveloper as separate repo)
+AIDeveloper/.git/
+modules/*/.git/
+
+modules/IntentInterpreter/.cache/*
