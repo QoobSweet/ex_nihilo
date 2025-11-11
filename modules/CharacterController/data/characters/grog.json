@@ -1,0 +1,28 @@
+{
+  "name": "Grog",
+  "items": [],
+  "currency": {
+    "platinum": 0,
+    "gold": 0,
+    "silver": 0,
+    "copper": 0
+  },
+  "personalityTraits": [],
+  "ideals": [],
+  "bonds": [],
+  "flaws": [],
+  "proficiencies": [],
+  "languages": [],
+  "spells": [],
+  "features": [],
+  "conditions": [],
+  "exhaustion": 0,
+  "inspiration": false,
+  "relationships": {},
+  "allies": [],
+  "enemies": [],
+  "organizations": [],
+  "notes": [],
+  "createdAt": "2025-10-28T23:03:09.280Z",
+  "updatedAt": "2025-10-28T23:03:09.282Z"
+}
