@@ -6,10 +6,9 @@ import { fileURLToPath } from 'url';
 import mysql from 'mysql2/promise';
 import * as dotenv from 'dotenv';
 
-dotenv.config();
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.join(__dirname, '..', '.env'), override: true });
 
 async function setupDatabase(): Promise<void> {
   const config = {

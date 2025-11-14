@@ -1,12 +1,16 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import { CharacterManager } from './character-manager.js';
 import { OpenRouterClient } from './openrouter-client.js';
 import { MySQLStorage } from './mysql-storage.js';
 import { SceneControllerClient } from './scene-client.js';
 import { CLIInput } from './types.js';
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+dotenv.config({ path: join(__dirname, '..', '.env'), override: true });
 
 console.log('Starting CharacterController...');
 

@@ -1,8 +1,5 @@
 import mysql from 'mysql2/promise';
-import * as dotenv from 'dotenv';
 import { Item, SearchItemsRequest } from './types.js';
-
-dotenv.config();
 
 /**
  * MySQL storage for item catalog

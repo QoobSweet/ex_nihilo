@@ -4,11 +4,15 @@ import { Command } from 'commander';
 import * as readline from 'readline';
 import chalk from 'chalk';
 import * as dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import { IntentInterpreter } from './interpreter.js';
 import { InterpretationResult, InterpreterError } from './types.js';
 
 // Load environment variables
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+dotenv.config({ path: join(__dirname, '..', '.env'), override: true });
 
 /**
  * Formats and displays an interpretation result as JSON

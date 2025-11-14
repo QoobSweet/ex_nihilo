@@ -4,12 +4,16 @@ import { Command } from 'commander';
 import * as readline from 'readline';
 import chalk from 'chalk';
 import * as dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import { OpenRouterClient } from './openrouter-client.js';
 import { CharacterManager } from './character-manager.js';
 import { CLIResponse, CLIInput } from './types.js';
 
 // Load environment variables
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+dotenv.config({ path: join(__dirname, '..', '.env'), override: true });
 
 /**
  * Format and display CLI response as JSON

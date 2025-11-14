@@ -1,12 +1,16 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import { MySQLSceneStorage } from './mysql-storage.js';
 import { SceneAIParser } from './ai-parser.js';
 import { SceneManager } from './scene-manager.js';
 import { OpenRouterClient } from './openrouter-client.js';
 import { SceneInputSchema, CoordinateSchema } from './types.js';
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+dotenv.config({ path: join(__dirname, '..', '.env'), override: true });
 
 const app = express();
 app.use(express.json());

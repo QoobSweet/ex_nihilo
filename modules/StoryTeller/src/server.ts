@@ -6,6 +6,8 @@
 
 import express, { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import { MySQLStorage } from './mysql-storage.js';
 import { StoryTellerManager } from './storyteller-manager.js';
 import {
@@ -15,7 +17,9 @@ import {
 } from './types.js';
 
 // Load environment variables
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+dotenv.config({ path: join(__dirname, '..', '.env'), override: true });
 
 const app = express();
 const PORT = parseInt(process.env.PORT || '3036');
