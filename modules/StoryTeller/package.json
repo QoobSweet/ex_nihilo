@@ -1,0 +1,51 @@
+{
+  "name": "storyteller",
+  "version": "1.0.0",
+  "description": "AI-powered narrative storytelling system for RPG interactions",
+  "main": "dist/server.js",
+  "type": "module",
+  "scripts": {
+    "predev": "bash -c \"echo '🧹 Cleaning up port 3037...' && (lsof -ti:3037 | xargs kill -9 2>/dev/null || true) && sleep 1 && echo '✅ Port cleared'\"",
+    "prestart": "bash -c \"echo '🧹 Cleaning up port 3037...' && (lsof -ti:3037 | xargs kill -9 2>/dev/null || true) && sleep 1 && echo '✅ Port cleared'\"",
+    "start": "node --loader ts-node/esm src/server.ts",
+    "build": "tsc",
+    "dev": "ts-node src/server.ts",
+    "db:setup": "node --loader ts-node/esm db/setup.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "storyteller",
+    "narrative",
+    "ai",
+    "openrouter",
+    "rpg"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mysql2": "^3.15.3",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.6",
+    "@typescript-eslint/eslint-plugin": "^6.16.0",
+    "@typescript-eslint/parser": "^6.16.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.2",
+    "prettier": "^3.1.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
