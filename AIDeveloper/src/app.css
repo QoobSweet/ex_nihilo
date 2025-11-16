@@ -1,0 +1,78 @@
+/* Existing styles */
+
+/* New styles for WorkflowView */
+.workflow-view {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  color: #333;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 20px;
+}
+
+.chart-section, .timeline-section, .list-section {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.workflow-list {
+  list-style: none;
+  padding: 0;
+}
+
+.workflow-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background: #f9f9f9;
+  border-radius: 4px;
+}
+
+.status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8em;
+}
+
+.status.pending { background: #ffc107; color: #000; }
+.status.in_progress { background: #17a2b8; color: #fff; }
+.status.completed { background: #28a745; color: #fff; }
+
+.timeline {
+  position: relative;
+}
+
+.timeline-items {
+  position: relative;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.timeline-marker {
+  width: 12px;
+  height: 12px;
+  background: #007bff;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.timeline-content {
+  flex: 1;
+}
+
+.loading {
+  text-align: center;
+  padding: 50px;
+}

@@ -1,44 +1,34 @@
 import React from 'react';
-import { processTimelineData, WorkflowData } from '../data/workflowData';
+import { sanitizeHtml } from '../security/sanitizationUtils';
+
+interface Workflow {
+  id: number;
+  name: string;
+  description: string;
+  status: string;
+  createdAt: string;
+}
 
 interface TimelineComponentProps {
-  workflowData: WorkflowData;
+  workflows: Workflow[];
 }
 
 /**
- * Component for displaying a timeline of workflow events
- * @param workflowData - The workflow data containing timeline events
- * @returns React component with a vertical timeline
- * @security Event text is sanitized to prevent XSS
+ * Timeline component for visualizing workflow progression
+ * @param workflows - Array of workflows to display
  */
-const TimelineComponent: React.FC<TimelineComponentProps> = ({ workflowData }) => {
-  const timelineEvents = processTimelineData(workflowData);
-
+const TimelineComponent: React.FC<TimelineComponentProps> = ({ workflows }) => {
   return (
-    <div className="workflow-timeline" style={{ maxWidth: '600px', margin: '0 auto' }}>
-      <h3>Workflow Timeline</h3>
-      <div style={{ position: 'relative', paddingLeft: '30px' }}>
-        {timelineEvents.map((event, index) => (
-          <div key={index} style={{ marginBottom: '20px', position: 'relative' }}>
-            <div
-              style={{
-                position: 'absolute',
-                left: '-35px',
-                top: '5px',
-                width: '10px',
-                height: '10px',
-                borderRadius: '50%',
-                backgroundColor: '#007bff',
-              }}
-            ></div>
-            <div style={{ borderLeft: '2px solid #007bff', paddingLeft: '20px', marginLeft: '-30px' }}>
-              <p style={{ margin: '0', fontWeight: 'bold' }}>
-                {new Date(event.timestamp).toLocaleString()}
-              </p>
-              <p style={{ margin: '5px 0' }}>
-                {/* Sanitize event text to prevent XSS */}
-                {event.event.replace(/[<>]/g, '')}
-              </p>
+    <div className="timeline">
+      <h2>Workflow Timeline</h2>
+      <div className="timeline-items">
+        {workflows.map((wf, index) => (
+          <div key={wf.id} className="timeline-item">
+            <div className="timeline-marker"></div>
+            <div className="timeline-content">
+              <h3 dangerouslySetInnerHTML={{ __html: sanitizeHtml(wf.name) }} />
+              <p dangerouslySetInnerHTML={{ __html: sanitizeHtml(wf.description) }} />
+              <small>{new Date(wf.createdAt).toLocaleDateString()}</small>
             </div>
           </div>
         ))}
