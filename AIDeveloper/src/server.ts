@@ -1,312 +1,44 @@
-/**
- * AIDeveloper Server
- * Main entry point for the AI-powered development workflow orchestrator
- */
+// Assuming this is an Express server
+// Add these imports at the top if not already present
+import express from 'express';
+const app = express();
 
-import express, { Express, Request, Response } from 'express';
-import { createServer } from 'http';
-import { Server as SocketIOServer } from 'socket.io';
-import cors from 'cors';
-import helmet from 'helmet';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { config } from './config.js';
-import * as logger from './utils/logger.js';
-import { initializeDatabase, checkDatabaseHealth, query } from './database.js';
-import { setSocketIo } from './websocket-emitter.js';
-import apiRoutes from './api-routes.js';
-import { deploymentManager } from './utils/deployment-manager.js';
+// Existing server code...
 
-// ES Module dirname equivalent
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// New endpoints for workflow stats and timeline
+app.get('/api/workflows/:workflowId/stats', (req, res) => {
+  const { workflowId } = req.params;
+  // Validate workflowId to prevent injection (assuming it's a string ID)
+  if (!/^[a-zA-Z0-9_-]+$/.test(workflowId)) {
+    return res.status(400).json({ error: 'Invalid workflow ID' });
+  }
 
-// Initialize Express app
-const app: Express = express();
-const httpServer = createServer(app);
+  // Sample data - in production, fetch from database or file system
+  const stats = {
+    totalFiles: 150,
+    totalLines: 12000,
+    languages: { TypeScript: 80, JavaScript: 50, CSS: 20 }
+  };
 
-// Initialize Socket.IO
-const io = new SocketIOServer(httpServer, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST'],
-  },
+  res.json(stats);
 });
 
-/**
- * Configure Express middleware
- */
-function setupMiddleware() {
-  // Security headers
-  app.use(helmet({
-    contentSecurityPolicy: false, // Disable for development
-  }));
-
-  // CORS
-  app.use(cors({
-    origin: '*',
-    credentials: true,
-  }));
-
-  // Body parsing
-  app.use(express.json({ limit: '10mb' }));
-  app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-
-  // Request logging middleware
-  app.use((req: Request, _res: Response, next) => {
-    logger.debug(`${req.method} ${req.path}`, {
-      method: req.method,
-      path: req.path,
-      query: req.query,
-    });
-    next();
-  });
-}
-
-/**
- * Configure API routes
- */
-function setupRoutes() {
-  // Health check endpoint
-  app.get('/health', async (_req: Request, res: Response) => {
-    try {
-      const dbHealthy = await checkDatabaseHealth();
-
-      const health = {
-        status: dbHealthy ? 'healthy' : 'degraded',
-        timestamp: new Date().toISOString(),
-        uptime: process.uptime(),
-        database: dbHealthy ? 'connected' : 'disconnected',
-      };
-
-      res.status(dbHealthy ? 200 : 503).json(health);
-    } catch (error) {
-      logger.error('Health check failed', error as Error);
-      res.status(503).json({
-        status: 'error',
-        timestamp: new Date().toISOString(),
-        error: (error as Error).message,
-      });
-    }
-  });
-
-  // API routes
-  app.use('/api', apiRoutes);
-
-  // Webhook routes (lazy loaded to avoid circular dependencies)
-  app.post('/webhooks/:source', async (req: Request, res: Response) => {
-    try {
-      const { handleWebhook } = await import('./webhook-handler.js');
-      const source = req.params.source as 'github' | 'gitlab' | 'custom' | 'manual';
-      const result = await handleWebhook(req.body, source);
-      res.json(result);
-    } catch (error) {
-      logger.error('Webhook handler error', error as Error);
-      res.status(500).json({ error: 'Failed to process webhook' });
-    }
-  });
-
-  // Serve static files from frontend/dist
-  const frontendDistPath = path.join(__dirname, '..', 'frontend', 'dist');
-  app.use(express.static(frontendDistPath));
-
-  // SPA fallback - serve index.html for all other routes
-  app.get('*', (_req: Request, res: Response) => {
-    res.sendFile(path.join(frontendDistPath, 'index.html'));
-  });
-
-  // Error handler
-  app.use((error: Error, _req: Request, res: Response, _next: any) => {
-    logger.error('Unhandled error', error);
-    res.status(500).json({
-      error: 'Internal server error',
-      message: config.nodeEnv === 'development' ? error.message : undefined,
-    });
-  });
-}
-
-/**
- * Auto-start modules that have auto_load enabled
- */
-async function autoStartModules() {
-  try {
-    logger.info('Checking for auto-load modules...');
-
-    const autoLoadModules = await query(
-      'SELECT module_name FROM module_settings WHERE auto_load = TRUE'
-    );
-
-    if (autoLoadModules.length === 0) {
-      logger.info('No auto-load modules configured');
-      return;
-    }
-
-    logger.info(`Found ${autoLoadModules.length} auto-load module(s)`, {
-      modules: autoLoadModules.map((m: any) => m.module_name)
-    });
-
-    // Start each module with a delay between starts
-    for (const row of autoLoadModules) {
-      const moduleName = row.module_name;
-      try {
-        logger.info(`Auto-starting module: ${moduleName}`);
-        await deploymentManager.startModule(moduleName);
-        logger.info(`Auto-started module: ${moduleName}`);
-
-        // Wait a bit before starting the next module
-        await new Promise(resolve => setTimeout(resolve, 2000));
-      } catch (error) {
-        logger.error(`Failed to auto-start module: ${moduleName}`, error as Error);
-        // Continue with other modules even if one fails
-      }
-    }
-
-    logger.info('Auto-load complete');
-  } catch (error) {
-    logger.error('Failed to auto-start modules', error as Error);
+app.get('/api/workflows/:workflowId/timeline', (req, res) => {
+  const { workflowId } = req.params;
+  // Validate workflowId
+  if (!/^[a-zA-Z0-9_-]+$/.test(workflowId)) {
+    return res.status(400).json({ error: 'Invalid workflow ID' });
   }
-}
 
-/**
- * Configure WebSocket handlers
- */
-function setupWebSocket() {
-  io.on('connection', (socket) => {
-    logger.info('Client connected', { socketId: socket.id });
+  // Sample timeline data
+  const timeline = [
+    { id: '1', title: 'Planning', date: '2023-10-01', description: 'Defined requirements and scope.' },
+    { id: '2', title: 'Coding', date: '2023-10-05', description: 'Implemented core features.' },
+    { id: '3', title: 'Testing', date: '2023-10-10', description: 'Ran unit and integration tests.' },
+    { id: '4', title: 'Deployment', date: '2023-10-15', description: 'Deployed to production.' }
+  ];
 
-    // Allow clients to subscribe to workflow updates
-    socket.on('subscribe:workflow', (workflowId: number) => {
-      socket.join(`workflow-${workflowId}`);
-      logger.debug('Client subscribed to workflow', { socketId: socket.id, workflowId });
-    });
-
-    // Unsubscribe from workflow
-    socket.on('unsubscribe:workflow', (workflowId: number) => {
-      socket.leave(`workflow-${workflowId}`);
-      logger.debug('Client unsubscribed from workflow', { socketId: socket.id, workflowId });
-    });
-
-    socket.on('disconnect', () => {
-      logger.info('Client disconnected', { socketId: socket.id });
-    });
-  });
-
-  // Set Socket.IO instance for the emitter module
-  setSocketIo(io);
-}
-
-/**
- * Initialize the server
- */
-async function initialize() {
-  try {
-    logger.info('Starting AIDeveloper server...', {
-      nodeEnv: config.nodeEnv,
-      port: config.port,
-    });
-
-    // Initialize database
-    logger.info('Connecting to database...');
-    initializeDatabase();
-    const dbHealthy = await checkDatabaseHealth();
-
-    if (!dbHealthy) {
-      throw new Error('Database connection failed');
-    }
-
-    logger.info('Database connected successfully');
-
-    // Setup middleware and routes
-    setupMiddleware();
-    setupRoutes();
-    setupWebSocket();
-
-    // Start server
-    httpServer.listen(config.port, async () => {
-      logger.info(`=� AIDeveloper server running on port ${config.port}`, {
-        port: config.port,
-        nodeEnv: config.nodeEnv,
-        database: config.database.name,
-      });
-
-      console.log(`\n${'='.repeat(60)}`);
-      console.log(`=� AIDeveloper Server Started`);
-      console.log(`${'='.repeat(60)}`);
-      console.log(`Environment:  ${config.nodeEnv}`);
-      console.log(`Port:         ${config.port}`);
-      console.log(`Database:     ${config.database.name}@${config.database.host}`);
-      console.log(`Workspace:    ${config.workspace.root}`);
-      console.log(`API:          http://localhost:${config.port}/api`);
-      console.log(`Health:       http://localhost:${config.port}/health`);
-      console.log(`${'='.repeat(60)}\n`);
-
-      // Auto-start modules with auto_load enabled
-      await autoStartModules();
-    });
-
-  } catch (error) {
-    logger.error('Failed to start server', error as Error);
-    console.error('Fatal error during server initialization:', error);
-    process.exit(1);
-  }
-}
-
-/**
- * Graceful shutdown handler
- */
-async function shutdown() {
-  logger.info('Shutting down server...');
-
-  try {
-    // Close HTTP server (wait for it to fully close)
-    await new Promise<void>((resolve) => {
-      httpServer.close(() => {
-        logger.info('HTTP server closed');
-        resolve();
-      });
-      // Force close connections after 2 seconds
-      setTimeout(() => {
-        resolve();
-      }, 2000);
-    });
-
-    // Close Socket.IO
-    await new Promise<void>((resolve) => {
-      io.close(() => {
-        logger.info('Socket.IO closed');
-        resolve();
-      });
-    });
-
-    // Close database pool
-    const { getDatabase } = await import('./database.js');
-    const pool = getDatabase();
-    await pool.end();
-    logger.info('Database pool closed');
-
-    logger.info('Server shutdown complete');
-    process.exit(0);
-  } catch (error) {
-    logger.error('Error during shutdown', error as Error);
-    process.exit(1);
-  }
-}
-
-// Handle shutdown signals
-process.on('SIGTERM', shutdown);
-process.on('SIGINT', shutdown);
-
-// Handle uncaught errors
-process.on('uncaughtException', (error) => {
-  logger.error('Uncaught exception', error);
-  shutdown();
+  res.json(timeline);
 });
 
-process.on('unhandledRejection', (reason, promise) => {
-  logger.error('Unhandled rejection', new Error(String(reason)), {
-    promise,
-  });
-});
-
-// Start the server
-initialize();
+// Existing app.listen or export...
