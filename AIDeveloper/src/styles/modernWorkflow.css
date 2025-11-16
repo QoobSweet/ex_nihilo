@@ -1,0 +1,99 @@
+/* Modern Workflow View Styles */
+.workflow-view {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  background-color: #f8f9fa;
+  color: #333;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.workflow-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.workflow-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #495057;
+}
+
+.workflow-status {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.workflow-status.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.workflow-status.in-progress {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.workflow-status.completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.workflow-status.failed {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.workflow-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.workflow-metrics {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.workflow-metrics h3 {
+  margin-top: 0;
+  color: #495057;
+}
+
+.workflow-charts {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.workflow-timeline {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+  .workflow-content {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-timeline {
+    grid-column: span 1;
+  }
+}
+
+/* Ensure no unsafe styles that could lead to XSS */
+/* All dynamic content is sanitized in components */
