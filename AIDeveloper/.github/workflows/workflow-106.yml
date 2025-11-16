@@ -1,0 +1,151 @@
+name: Workflow 106 - Automated Code Analysis and Quality Checks
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        description: 'Target branch to analyze'
+        required: false
+        default: 'main'
+      analysis_depth:
+        description: 'Analysis depth (shallow|deep)'
+        required: false
+        default: 'shallow'
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  workflow-106:
+    name: Execute Workflow 106
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [18.x]
+    
+    env:
+      NODE_ENV: production
+      WORKFLOW_ID: 106
+      LOG_LEVEL: debug
+      MAX_RETRIES: 3
+      RETRY_DELAY: 5000
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.inputs.target_branch || github.ref }}
+      
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      
+      - name: Verify Node.js installation
+        run: |
+          node --version
+          npm --version
+      
+      - name: Install dependencies
+        run: |
+          npm ci --prefer-offline --no-audit
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      - name: Verify dependencies
+        run: |
+          npm list --depth=0 || true
+          echo "Checking for critical dependencies..."
+          node -e "require('typescript'); console.log('TypeScript: OK');"
+          node -e "require('zod'); console.log('Zod: OK');"
+      
+      - name: Create logs directory
+        run: |
+          mkdir -p logs
+          chmod 755 logs
+      
+      - name: Build TypeScript project
+        run: |
+          npm run build
+        env:
+          NODE_OPTIONS: '--max-old-space-size=4096'
+      
+      - name: Run Workflow 106
+        id: workflow_execution
+        run: |
+          echo "Starting Workflow 106 execution..."
+          npm run workflow:execute -- --id=106 --mode=production
+        env:
+          WORKFLOW_TIMEOUT: 1800000
+          ANALYSIS_DEPTH: ${{ github.event.inputs.analysis_depth || 'shallow' }}
+          TARGET_BRANCH: ${{ github.event.inputs.target_branch || github.ref }}
+        continue-on-error: false
+      
+      - name: Validate workflow output
+        if: success()
+        run: |
+          if [ -f "logs/workflow-106.log" ]; then
+            echo "Workflow log file exists"
+            tail -n 50 logs/workflow-106.log
+          else
+            echo "Warning: Workflow log file not found"
+            exit 1
+          fi
+      
+      - name: Upload workflow logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: workflow-106-logs-${{ github.run_number }}
+          path: |
+            logs/workflow-106.log
+            logs/error.log
+            logs/system.log
+          retention-days: 30
+      
+      - name: Upload workflow results
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: workflow-106-results-${{ github.run_number }}
+          path: |
+            output/workflow-106-*.json
+            output/analysis-report-*.html
+          retention-days: 30
+      
+      - name: Cleanup on failure
+        if: failure()
+        run: |
+          echo "Workflow 106 failed. Collecting diagnostic information..."
+          echo "=== System Information ==="
+          uname -a
+          echo "=== Disk Space ==="
+          df -h
+          echo "=== Memory Usage ==="
+          free -h
+          echo "=== Process List ==="
+          ps aux | head -20
+          echo "=== Recent Logs ==="
+          if [ -f "logs/workflow-106.log" ]; then
+            tail -n 100 logs/workflow-106.log
+          fi
+      
+      - name: Report status
+        if: always()
+        run: |
+          if [ "${{ steps.workflow_execution.outcome }}" == "success" ]; then
+            echo "✅ Workflow 106 completed successfully"
+            exit 0
+          else
+            echo "❌ Workflow 106 failed"
+            exit 1
+          fi
