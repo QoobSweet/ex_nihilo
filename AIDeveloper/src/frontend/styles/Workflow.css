@@ -1,0 +1,22 @@
+.workflow-view {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.workflow-view h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .workflow-view {
+    padding: 10px;
+  }
+}
