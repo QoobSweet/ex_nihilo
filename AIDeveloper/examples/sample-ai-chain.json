@@ -1,0 +1,141 @@
+{
+  "id": "fantasy-story-creation-chain",
+  "name": "Fantasy Story Creation Workflow",
+  "description": "A complete chain for generating a fantasy story with characters, scenes, and dialogue",
+  "version": "1.0.0",
+  "modules": [
+    {
+      "id": "story-outline",
+      "module": "StoryGenerator",
+      "config": {
+        "genre": "fantasy",
+        "length": "outline",
+        "style": "epic"
+      },
+      "inputs": {
+        "prompt": "Create a fantasy story outline about a young wizard discovering an ancient prophecy",
+        "constraints": {
+          "maxLength": 500,
+          "includeElements": ["magic", "quest", "villains"]
+        }
+      },
+      "outputs": {
+        "persist": ["plotSummary", "mainCharacters"]
+      }
+    },
+    {
+      "id": "character-development",
+      "module": "CharacterCreator",
+      "config": {
+        "detailLevel": "comprehensive",
+        "includeBackstory": true
+      },
+      "inputs": {
+        "storyContext": "${story-outline.output}",
+        "characterList": "${story-outline.output.mainCharacters}",
+        "worldSetting": "medieval fantasy realm"
+      },
+      "outputs": {
+        "persist": ["characterProfiles", "relationships"]
+      }
+    },
+    {
+      "id": "opening-scene",
+      "module": "ScenePainter",
+      "config": {
+        "visualDetail": "high",
+        "atmosphere": "mysterious"
+      },
+      "inputs": {
+        "storyContext": "${story-outline.output}",
+        "characterFocus": "${character-development.output.protagonist}",
+        "setting": "ancient forest ruins",
+        "scenePurpose": "introduce protagonist and inciting incident"
+      },
+      "outputs": {
+        "persist": ["sceneDescriptions"]
+      }
+    },
+    {
+      "id": "dialogue-generation",
+      "module": "DialogueWriter",
+      "config": {
+        "tone": "tense",
+        "characterCount": 2
+      },
+      "inputs": {
+        "sceneContext": "${opening-scene.output}",
+        "characters": [
+          "${character-development.output.protagonist}",
+          "${character-development.output.mentor}"
+        ],
+        "conversationTopic": "the ancient prophecy and its implications"
+      },
+      "outputs": {
+        "persist": ["dialogueScenes"]
+      }
+    },
+    {
+      "id": "content-moderation",
+      "module": "ContentFilter",
+      "config": {
+        "filters": ["violence", "language", "themes"],
+        "strictness": "moderate"
+      },
+      "inputs": {
+        "content": {
+          "story": "${story-outline.output}",
+          "characters": "${character-development.output}",
+          "scenes": "${opening-scene.output}",
+          "dialogue": "${dialogue-generation.output}"
+        },
+        "targetAudience": "young adult"
+      }
+    },
+    {
+      "id": "final-compilation",
+      "module": "FormatConverter",
+      "config": {
+        "outputFormat": "markdown",
+        "includeMetadata": true
+      },
+      "inputs": {
+        "components": {
+          "outline": "${story-outline.output}",
+          "characters": "${character-development.output}",
+          "openingScene": "${opening-scene.output}",
+          "dialogue": "${dialogue-generation.output}"
+        },
+        "moderationResults": "${content-moderation.output}",
+        "title": "The Wizard's Prophecy"
+      }
+    }
+  ],
+  "context": {
+    "persist": [
+      "plotSummary",
+      "mainCharacters",
+      "characterProfiles",
+      "relationships",
+      "sceneDescriptions",
+      "dialogueScenes"
+    ],
+    "initial": {
+      "worldState": {
+        "magicLevel": "high",
+        "technologyLevel": "medieval",
+        "currentThreats": ["dark sorcerer", "ancient curse"]
+      }
+    }
+  },
+  "errorHandling": {
+    "strategy": "continue-on-error",
+    "fallbackModules": {
+      "content-moderation": "basic-filter"
+    }
+  },
+  "performance": {
+    "timeout": 300000,
+    "maxConcurrentModules": 2
+  }
+}
