@@ -1,0 +1,21 @@
+{
+  "name": "aideveloper-frontend",
+  "version": "1.0.0",
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "recharts": "^2.5.0",
+    "typescript": "^4.9.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/recharts": "^1.8.24",
+    // ... other dependencies
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    // ... other scripts
+  }
+  // ... rest of package.json
+}
