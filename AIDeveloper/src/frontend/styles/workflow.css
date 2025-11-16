@@ -1,0 +1,468 @@
+/* ============================================
+   Workflow View - Modern Styles
+   ============================================ */
+
+/* Main Workflow Container */
+.workflow-view {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+/* Header Section */
+.workflow-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.workflow-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.workflow-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.workflow-status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.workflow-status.in-progress {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.workflow-status.completed {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.workflow-status.failed {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* Metrics Grid */
+.workflow-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.metric-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.metric-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.metric-change {
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.metric-change.positive {
+  color: #10b981;
+}
+
+.metric-change.negative {
+  color: #ef4444;
+}
+
+.metric-change.neutral {
+  color: #64748b;
+}
+
+/* Charts Section */
+.workflow-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.chart-card {
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chart-header {
+  margin-bottom: 1.5rem;
+}
+
+.chart-header h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 0.5rem 0;
+}
+
+.chart-header p {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.chart-container {
+  width: 100%;
+  height: 300px;
+}
+
+.chart-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  color: #94a3b8;
+  font-size: 0.875rem;
+}
+
+/* Timeline Section */
+.workflow-timeline {
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.timeline-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.timeline-count {
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.timeline-container {
+  position: relative;
+}
+
+.timeline-event {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.timeline-event:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-marker {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timeline-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.timeline-line {
+  width: 2px;
+  flex: 1;
+  background: #e2e8f0;
+  margin-top: 0.5rem;
+  min-height: 2rem;
+}
+
+.timeline-content {
+  flex: 1;
+  padding-bottom: 1rem;
+}
+
+.timeline-event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-event-type {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.timeline-event-time {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.timeline-event-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 0.5rem 0;
+}
+
+.timeline-event-description {
+  font-size: 0.875rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0 0 0.5rem 0;
+}
+
+.timeline-event-agent {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.agent-label {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.agent-name {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.timeline-event-metadata {
+  margin-top: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.375rem;
+  overflow: hidden;
+}
+
+.timeline-event-metadata summary {
+  padding: 0.5rem 0.75rem;
+  background: #f8fafc;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #475569;
+  user-select: none;
+}
+
+.timeline-event-metadata summary:hover {
+  background: #f1f5f9;
+}
+
+.metadata-content {
+  padding: 0.75rem;
+  margin: 0;
+  background: #1e293b;
+  color: #e2e8f0;
+  font-size: 0.75rem;
+  overflow-x: auto;
+  max-height: 200px;
+}
+
+.timeline-empty {
+  text-align: center;
+  padding: 3rem;
+  color: #94a3b8;
+}
+
+/* Loading States */
+.workflow-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 1rem;
+}
+
+.workflow-loading-spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 3px solid #e2e8f0;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.workflow-loading-text {
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+/* Error States */
+.workflow-error {
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.workflow-error-title {
+  color: #991b1b;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+.workflow-error-message {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .workflow-view {
+    padding: 1rem;
+  }
+
+  .workflow-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .workflow-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-charts {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-container {
+    height: 250px;
+  }
+
+  .timeline-event-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
+
+/* Dark Mode Support (Optional) */
+@media (prefers-color-scheme: dark) {
+  .workflow-view {
+    background: #0f172a;
+  }
+
+  .metric-card,
+  .chart-card,
+  .workflow-timeline {
+    background: #1e293b;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  .workflow-header h1,
+  .metric-value,
+  .timeline-event-title,
+  .chart-header h3 {
+    color: #f1f5f9;
+  }
+
+  .metric-label,
+  .timeline-event-time,
+  .chart-header p {
+    color: #94a3b8;
+  }
+
+  .timeline-event-description {
+    color: #cbd5e1;
+  }
+
+  .timeline-line {
+    background: #334155;
+  }
+
+  .timeline-event-metadata summary {
+    background: #0f172a;
+    color: #cbd5e1;
+  }
+
+  .timeline-event-metadata summary:hover {
+    background: #1e293b;
+  }
+}
