@@ -67,3 +67,4 @@ Executes tests using the project's configured test runner (e.g., Jest, Mocha, Vi
 - Cannot access files outside the working directory
 - Can only execute test-related commands (not arbitrary code execution)
 
+

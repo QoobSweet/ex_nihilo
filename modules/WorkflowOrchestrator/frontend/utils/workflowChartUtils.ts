@@ -218,3 +218,4 @@ export function getStatusColor(status: string): string {
   return STATUS_COLORS[status] || '#6b7280';
 }
 
+

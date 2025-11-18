@@ -57,3 +57,4 @@ Returns the current status of a workflow, including which agents have completed 
 - All file operations must go through appropriate agents (CodingAgent, etc.)
 - The orchestrator manages coordination, not implementation
 
+
