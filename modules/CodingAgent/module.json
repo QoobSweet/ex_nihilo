@@ -2,6 +2,9 @@
   "name": "CodingAgent",
   "version": "1.0.0",
   "description": "Code implementation agent with read and write access",
+  "category": "AI Agents",
+  "project": "AIDeveloper",
+  "tags": ["ai", "coding", "implementation", "agent"],
   "envVars": [
     {
       "key": "OPENROUTER_API_KEY",

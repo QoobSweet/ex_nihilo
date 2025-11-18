@@ -2,6 +2,9 @@
   "name": "CodeReviewAgent",
   "version": "1.0.0",
   "description": "Code review agent with read-only access to analyze code and generate review reports",
+  "category": "AI Agents",
+  "project": "AIDeveloper",
+  "tags": ["ai", "review", "quality", "security", "agent"],
   "envVars": [
     {
       "key": "OPENROUTER_API_KEY",

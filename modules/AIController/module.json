@@ -2,6 +2,9 @@
   "name": "AIController",
   "version": "1.0.0",
   "description": "Meta-controller for chaining requests across Ex Nihilo modules",
+  "category": "Controllers",
+  "project": "Ex Nihilo",
+  "tags": ["controller", "chains", "orchestration", "ai"],
   "pages": [
     {
       "path": "/chains",

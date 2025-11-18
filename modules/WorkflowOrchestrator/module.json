@@ -2,6 +2,9 @@
   "name": "WorkflowOrchestrator",
   "version": "1.0.0",
   "description": "Orchestrates workflow execution and manages agent sequence",
+  "category": "Workflow Management",
+  "project": "AIDeveloper",
+  "tags": ["orchestration", "workflows", "management"],
   "pages": [
     {
       "path": "/workflows",

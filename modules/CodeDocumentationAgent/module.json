@@ -2,6 +2,9 @@
   "name": "CodeDocumentationAgent",
   "version": "1.0.0",
   "description": "Code documentation agent with read and write access to generate documentation",
+  "category": "AI Agents",
+  "project": "AIDeveloper",
+  "tags": ["ai", "documentation", "agent"],
   "envVars": [
     {
       "key": "OPENROUTER_API_KEY",
