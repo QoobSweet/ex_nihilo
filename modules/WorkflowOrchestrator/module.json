@@ -9,6 +9,12 @@
       "label": "Workflows",
       "icon": "Activity",
       "navOrder": 2
+    },
+    {
+      "path": "/workflows/:id",
+      "component": "WorkflowDetail",
+      "label": "Workflow Detail",
+      "navOrder": 0
     }
   ],
   "envVars": [
