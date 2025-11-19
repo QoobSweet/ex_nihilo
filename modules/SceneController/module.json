@@ -4,7 +4,24 @@
   "description": "AI-powered scene and location management system with coordinate grid and position tracking",
   "category": "Controllers",
   "project": "Ex Nihilo",
-  "tags": ["scene", "location", "coordinates", "poi", "position-tracking", "ai", "openrouter", "rpg"],
+  "tags": [
+    "scene",
+    "location",
+    "coordinates",
+    "poi",
+    "position-tracking",
+    "ai",
+    "openrouter",
+    "rpg"
+  ],
+  "scripts": {
+    "install": "npm install",
+    "build": "npm run build",
+    "typecheck": "npm run typecheck",
+    "start": "npm start",
+    "dev": "npm run dev",
+    "test": "npm test"
+  },
   "env": [
     {
       "key": "PORT",

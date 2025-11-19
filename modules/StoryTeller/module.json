@@ -4,7 +4,20 @@
   "description": "AI-powered narrative storytelling system for RPG interactions",
   "category": "AI Services",
   "project": "Ex Nihilo",
-  "tags": ["storyteller", "narrative", "ai", "openrouter", "rpg"],
+  "tags": [
+    "storyteller",
+    "narrative",
+    "ai",
+    "openrouter",
+    "rpg"
+  ],
+  "scripts": {
+    "install": "npm install",
+    "build": "npm run build",
+    "typecheck": "npm run typecheck",
+    "start": "npm start",
+    "dev": "npm run dev"
+  },
   "env": [
     {
       "key": "PORT",

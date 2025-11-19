@@ -4,7 +4,17 @@
   "description": "Code implementation agent with read and write access",
   "category": "AI Agents",
   "project": "AIDeveloper",
-  "tags": ["ai", "coding", "implementation", "agent"],
+  "tags": [
+    "ai",
+    "coding",
+    "implementation",
+    "agent"
+  ],
+  "scripts": {
+    "install": "npm install",
+    "build": "npm run build",
+    "typecheck": "npm run typecheck"
+  },
   "envVars": [
     {
       "key": "OPENROUTER_API_KEY",
@@ -24,5 +34,3 @@
     }
   ]
 }
-
-

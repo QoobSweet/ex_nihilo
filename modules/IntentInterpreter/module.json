@@ -4,7 +4,21 @@
   "description": "AI-powered chat message intent classifier using OpenRouter Grok 4 Fast",
   "category": "AI Services",
   "project": "Ex Nihilo",
-  "tags": ["intent-classification", "ai", "openrouter", "grok", "nlp"],
+  "tags": [
+    "intent-classification",
+    "ai",
+    "openrouter",
+    "grok",
+    "nlp"
+  ],
+  "scripts": {
+    "install": "npm install",
+    "build": "npm run build",
+    "typecheck": "npm run typecheck",
+    "start": "npm start",
+    "dev": "npm run dev",
+    "test": "npm test"
+  },
   "env": [
     {
       "key": "PORT",

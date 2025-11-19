@@ -4,7 +4,22 @@
   "description": "Item and inventory management system with template-based items and world position tracking",
   "category": "Controllers",
   "project": "Ex Nihilo",
-  "tags": ["items", "inventory", "loot", "equipment", "rpg", "game-items"],
+  "tags": [
+    "items",
+    "inventory",
+    "loot",
+    "equipment",
+    "rpg",
+    "game-items"
+  ],
+  "scripts": {
+    "install": "npm install",
+    "build": "npm run build",
+    "typecheck": "npm run typecheck",
+    "start": "npm start",
+    "dev": "npm run dev",
+    "test": "npm test"
+  },
   "env": [
     {
       "key": "PORT",

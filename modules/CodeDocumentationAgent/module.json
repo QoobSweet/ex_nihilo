@@ -4,7 +4,16 @@
   "description": "Code documentation agent with read and write access to generate documentation",
   "category": "AI Agents",
   "project": "AIDeveloper",
-  "tags": ["ai", "documentation", "agent"],
+  "tags": [
+    "ai",
+    "documentation",
+    "agent"
+  ],
+  "scripts": {
+    "install": "npm install",
+    "build": "npm run build",
+    "typecheck": "npm run typecheck"
+  },
   "envVars": [
     {
       "key": "OPENROUTER_API_KEY",
@@ -24,5 +33,3 @@
     }
   ]
 }
-
-

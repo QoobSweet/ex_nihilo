@@ -4,7 +4,16 @@
   "description": "Orchestrates workflow execution and manages agent sequence",
   "category": "Workflow Management",
   "project": "AIDeveloper",
-  "tags": ["orchestration", "workflows", "management"],
+  "tags": [
+    "orchestration",
+    "workflows",
+    "management"
+  ],
+  "scripts": {
+    "install": "npm install",
+    "build": "npm run build",
+    "typecheck": "npm run typecheck"
+  },
   "pages": [
     {
       "path": "/workflows",
@@ -39,4 +48,3 @@
     }
   ]
 }
-

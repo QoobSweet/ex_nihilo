@@ -5,6 +5,14 @@
   "category": "Controllers",
   "project": "Ex Nihilo",
   "tags": ["character-sheet", "ai", "openrouter", "rpg", "dnd"],
+  "scripts": {
+    "install": "npm install",
+    "build": "npm run build",
+    "start": "npm start",
+    "dev": "npm run dev",
+    "test": "npm test",
+    "typecheck": "npm run typecheck"
+  },
   "env": [
     {
       "key": "PORT",

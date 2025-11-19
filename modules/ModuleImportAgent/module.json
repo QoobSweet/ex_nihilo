@@ -1,0 +1,36 @@
+{
+  "name": "ModuleImportAgent",
+  "version": "1.0.0",
+  "description": "AI-powered agent that automatically generates module.json configurations for newly imported modules",
+  "category": "Agents",
+  "project": "AIDeveloper",
+  "tags": [
+    "module-import",
+    "code-analysis",
+    "ai-agent",
+    "automation",
+    "configuration-generation"
+  ],
+  "scripts": {
+    "install": "npm install",
+    "build": "npm run build",
+    "typecheck": "npm run typecheck",
+    "dev": "npm run dev"
+  },
+  "env": [
+    {
+      "key": "OPENROUTER_API_KEY",
+      "description": "OpenRouter API key for AI-powered module analysis",
+      "required": true,
+      "type": "string",
+      "secret": true
+    },
+    {
+      "key": "OPENROUTER_MODEL",
+      "description": "OpenRouter model to use for module analysis",
+      "required": false,
+      "defaultValue": "anthropic/claude-3.5-sonnet",
+      "type": "string"
+    }
+  ]
+}

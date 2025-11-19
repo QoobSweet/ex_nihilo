@@ -4,7 +4,20 @@
   "description": "Meta-controller for chaining requests across Ex Nihilo modules",
   "category": "Controllers",
   "project": "Ex Nihilo",
-  "tags": ["controller", "chains", "orchestration", "ai"],
+  "tags": [
+    "controller",
+    "chains",
+    "orchestration",
+    "ai"
+  ],
+  "scripts": {
+    "install": "npm install",
+    "build": "npm run build",
+    "typecheck": "npm run typecheck",
+    "start": "npm start",
+    "dev": "npm run dev",
+    "test": "npm test"
+  },
   "pages": [
     {
       "path": "/chains",
@@ -87,5 +100,3 @@
     }
   ]
 }
-
-

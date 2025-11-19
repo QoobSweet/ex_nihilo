@@ -4,7 +4,17 @@
   "description": "Code planning agent with read-only access to analyze codebase and create implementation plans",
   "category": "AI Agents",
   "project": "AIDeveloper",
-  "tags": ["ai", "planning", "architecture", "agent"],
+  "tags": [
+    "ai",
+    "planning",
+    "architecture",
+    "agent"
+  ],
+  "scripts": {
+    "install": "npm install",
+    "build": "npm run build",
+    "typecheck": "npm run typecheck"
+  },
   "envVars": [
     {
       "key": "OPENROUTER_API_KEY",
@@ -24,5 +34,3 @@
     }
   ]
 }
-
-
