@@ -3,9 +3,8 @@ import toast from 'react-hot-toast';
 // Import from AIDeveloper frontend (shared dependencies)
 // Path: from modules/WorkflowOrchestrator/frontend/pages/ to AIDeveloper/frontend/src/
 // @ts-ignore - Dynamic import path resolved at build time
-import { workflowsAPI, modulesAPI } from '../../../../AIDeveloper/frontend/src/services/api';
-// @ts-ignore - Dynamic import path resolved at build time
-import { useWebSocket } from '../../../../AIDeveloper/frontend/src/hooks/useWebSocket';
+import { workflowsAPI, modulesAPI } from '../services/api';
+import { useWebSocket } from '../hooks/useWebSocket';
 import {
   Plus,
   RefreshCw,
